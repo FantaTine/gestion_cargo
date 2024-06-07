@@ -1,0 +1,17 @@
+{
+  
+    "cargaison":[
+        {
+            "type" : "",
+              "code":"",
+              "poids" :2,
+              "distance" :"",
+              "dateDepartPrevue" :"dateDepartPrevue",
+              "dateArriveePrevue" :"date",
+              "lieuArrivee" :"lieu",
+              "lieuDepart":"depart",
+              "status":"enattente"
+        }
+    ] 
+  }
+    

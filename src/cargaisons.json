@@ -1,0 +1,185 @@
+{
+    "cargaisons": [
+        {
+            "type": "Maritime",
+            "code": "FN661",
+            "poids": 61,
+            "distance": 2.48,
+            "dateDepartPrevue": "10-Feb-1972",
+            "dateArriveePrevue": "14-Jul-2009",
+            "lieuDepart": "Bermondsey",
+            "lieuArrivee": "Rotherhithe",
+            "status": "Fermer",
+            "etat": "En cours",
+            "produits": [
+                {
+                    "codepro": "P137",
+                    "nomproduit": "Fruits",
+                    "typeproduit": "alimentaires",
+                    "poids": 24,
+                    "nomclient": "Diop",
+                    "prenomclient": "Diarry",
+                    "numclient": 775643212,
+                    "adressclient": "Thi\u00e8s",
+                    "emailclient": "fatoumata@gmail.com",
+                    "nomdestinataire": "Mbengue",
+                    "prenomdestinataire": "Fatoumata",
+                    "numdestinataire": 789876543,
+                    "adressdestinataire": "Dakar",
+                    "emaildestinataire": "diarietou07diop@gmail.com",
+                    "statut": "Perdu"
+                },
+                {
+                    "codepro": "P255",
+                    "nomproduit": "C\u00e9r\u00e9al",
+                    "typeproduit": "alimentaires",
+                    "poids": 84,
+                    "nomclient": "Diallo",
+                    "prenomclient": "Kadjia",
+                    "numclient": 779860987,
+                    "adressclient": "Parcelles",
+                    "emailclient": "kadjia@gmail.com",
+                    "nomdestinataire": "Tine",
+                    "prenomdestinataire": "Fanta",
+                    "numdestinataire": 785286330,
+                    "adressdestinataire": "Foire",
+                    "emaildestinataire": "fantatine18@gmail.com",
+                    "statut": "Disponible"
+                }
+            ]
+        },
+        {
+            "type": "Routier",
+            "code": "FN428",
+            "poids": 34,
+            "distance": 3.61,
+            "dateDepartPrevue": "16-May-1976",
+            "dateArriveePrevue": "11-Jun-1973",
+            "lieuDepart": "Lynton Road",
+            "lieuArrivee": "Greenland Pier",
+            "status": "Ouvert",
+            "etat": "En attente",
+            "produits": [
+                {
+                    "nomproduit": "Pi\u00e9ces",
+                    "typeproduit": "materiels",
+                    "poids": 40,
+                    "nomclient": "Mbow",
+                    "prenomclient": "Baye Saer",
+                    "numclient": 768753421,
+                    "adressclient": "Boune",
+                    "nomdestinataire": "Diol",
+                    "prenomdestinataire": "Issa",
+                    "numdestinataire": 759801657,
+                    "adressdestinataire": "Guediawaye",
+                    "statut": "Disponible"
+                }
+            ]
+        },
+        {
+            "type": "Routier",
+            "code": "FN79",
+            "poids": 34,
+            "distance": 3.61,
+            "dateDepartPrevue": "16-May-1976",
+            "dateArriveePrevue": "11-Jun-1973",
+            "lieuDepart": "ermondsey Spa",
+            "lieuArrivee": "Rope Street",
+            "status": "Fermer",
+            "etat": "Arriver",
+            "produits": [
+                {
+                    "codepro": "P323",
+                    "nomproduit": "Iphone 16",
+                    "typeproduit": "materiels",
+                    "poids": null,
+                    "nomclient": "Diallo",
+                    "prenomclient": "Ibrahima kaba",
+                    "numclient": 785222794,
+                    "adressclient": "Ouest foire",
+                    "emailclient": "dialloibhazard@gmail.com",
+                    "nomdestinataire": "Bald\u00e9",
+                    "prenomdestinataire": "Sidy Diop",
+                    "numdestinataire": 784316538,
+                    "adressdestinataire": "Parcelle",
+                    "emaildestinataire": "sididiop53@gmail.com",
+                    "statut": "Recuperer"
+                },
+                {
+                    "codepro": "P204",
+                    "nomproduit": "Iphone 16",
+                    "typeproduit": "materiels",
+                    "poids": null,
+                    "nomclient": "Diallo",
+                    "prenomclient": "Ibrahima kaba",
+                    "numclient": 785222794,
+                    "adressclient": "Ouest foire",
+                    "emailclient": "dialloibhazard@gmail.com",
+                    "nomdestinataire": "Bald\u00e9",
+                    "prenomdestinataire": "Sidy Diop",
+                    "numdestinataire": 784316538,
+                    "adressdestinataire": "Parcelle",
+                    "emaildestinataire": "sididiop53@gmail.com",
+                    "statut": "Perdu"
+                }
+            ]
+        },
+        {
+            "type": "Maritime",
+            "code": "FN179",
+            "poids": 34,
+            "distance": 3.61,
+            "dateDepartPrevue": "16-May-1976",
+            "dateArriveePrevue": "11-Jun-1973",
+            "lieuDepart": "Old Kent Road",
+            "lieuArrivee": "Rotherhithe",
+            "status": "Ouvert",
+            "etat": "En attente",
+            "produits": []
+        },
+        {
+            "type": "Aerien",
+            "code": "FN194",
+            "poids": 79,
+            "distance": 1.61,
+            "dateDepartPrevue": "29-Sep-1996",
+            "dateArriveePrevue": "23-Jun-2018",
+            "lieuDepart": "Oxley Close",
+            "lieuArrivee": "Royaume-Uni",
+            "status": "Ouvert",
+            "etat": "En attente",
+            "produits": []
+        },
+        {
+            "type": "Aerien",
+            "code": "FN322",
+            "poids": 70,
+            "distance": 1.38,
+            "dateDepartPrevue": "26-Apr-1991",
+            "dateArriveePrevue": "03-Jul-2012",
+            "lieuDepart": "Royaume-Uni",
+            "lieuArrivee": "Hawkstone Road",
+            "status": "Ouvert",
+            "etat": "En attente",
+            "produits": [
+                {
+                    "codepro": "P100",
+                    "nomproduit": "Bonbon",
+                    "typeproduit": "alimentaires",
+                    "poids": 24,
+                    "nomclient": "Wade",
+                    "prenomclient": "Dame",
+                    "numclient": 776541290,
+                    "adressclient": "Parcelles",
+                    "emailclient": "fantatine18@gmail.com",
+                    "nomdestinataire": "Diop",
+                    "prenomdestinataire": "Sidy",
+                    "numdestinataire": 786542312,
+                    "adressdestinataire": "Mariste",
+                    "emaildestinataire": "sididiop53@gmail.com",
+                    "statut": "Disponible"
+                }
+            ]
+        }
+    ]
+}
