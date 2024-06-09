@@ -33,7 +33,7 @@ document.getElementById('form')?.addEventListener('submit', (event) => {
     []
   )
 
-  console.log(cargaison);
+
   fetch("enregistrer_cargaison.php", {
     method: 'POST',
     headers: {
@@ -70,7 +70,6 @@ selectedLimit.addEventListener('change', function (e) {
 var id: string | null
 
 console.log(cargo)
-
 
 // Pagination de la liste des cargaisons
 
@@ -127,7 +126,7 @@ function afficherCargaisons(): void {
             <td class="px-6 py-4 " ><button  class="bg-yellow-500 text-white h-10 px-5 py-1 rounded btn-ajt" data-id="${cargaison.code}"  type="button" >Ajouter</button></td>
           `;
         cargaisonList.appendChild(row);
-        console.log(cargaison.code);
+      
       });
 
       createPagination(cargaisons.length, itemsPerPage);
@@ -136,7 +135,7 @@ function afficherCargaisons(): void {
         const target = event.target as HTMLElement;
         if (target.classList.contains('btn-ajt')) {
           id = target.getAttribute('data-id');
-          console.log(id);
+       
           const my_modal_3 = document.getElementById('my_modal_3') as HTMLDialogElement;
           if (id) {
             my_modal_3!.showModal();
@@ -148,7 +147,7 @@ function afficherCargaisons(): void {
         const target = event.target as HTMLElement;
         if (target.classList.contains('btn-view')) {
           id = target.getAttribute('data-id');
-          console.log(id);
+        
           const my_modal_2 = document.getElementById('my_modal_2') as HTMLDialogElement;
           if (id) {
             my_modal_2!.showModal();
@@ -157,11 +156,11 @@ function afficherCargaisons(): void {
         }
 
         const ids = document.querySelectorAll('.statutproduit')!;
-        console.log(ids);
+      
         ids.forEach(id => {
           id.addEventListener('change', function (event) {
             const target = event.target as HTMLInputElement;
-            console.log(target?.value);
+            
             const idproduit = id.getAttribute('id');
             changerstatpro({id: idproduit, status: target.value, action: 'changeStatutProduit'});
           });
@@ -217,7 +216,6 @@ envoyerversjson(produit);
 
 });
 
-console.log("simple");
 
 function envoyerversjson(objet: any){
   fetch("enregistrer_cargaison.php", {
@@ -229,24 +227,15 @@ function envoyerversjson(objet: any){
   })
     .then(response => response.json())
     .then(result => {
+
+      console.log(result);
       if(result.status === 'success'){
+        
         const my_modal_3 = document.getElementById('my_modal_3') as HTMLDialogElement;
         my_modal_3!.close();
-      //   Swal.fire({
-      //     title: "Succès",
-      //     text: "Produit enregisré avec succès",
-      //     icon: "success",
-      //     showConfirmButton: false,
-      //     timer: 3000
-      //   });
-      // }else{
-      //   Swal.fire({
-      //     title: "Erreur",
-      //     text: "Produit non enregisré",
-      //     icon: "error",
-      //     showConfirmButton: false,
-      //     timer: 3000
-      //   });
+       gestionAlert(result.status, result.message);
+      }else{
+        gestionAlert(result.status, result.message);
       }
     })
   }
@@ -261,7 +250,7 @@ function afficherDetailsCargaisons(id?:string | null ): void {
       const cargaison = cargaisons.find(cargaison => cargaison.code === id);
 
       cargo = [...cargaisons];
-      console.log(cargaisons);
+     
       
       const cargaisonList = document.getElementById('bodydetailscargo');
      
@@ -312,7 +301,7 @@ function afficherDetailsCargaisons(id?:string | null ): void {
         const select = event.target as HTMLSelectElement;
         const etat = select.value;
         const id = select.getAttribute("data-id");
-          console.log(cargaison?.code, etat);
+         
           changerstatus({idp:id, etat: etat, action: "changeStatus"});
           // envoyerversjson(cargaison);
         
@@ -354,16 +343,16 @@ function afficherDetailsCargaisons(id?:string | null ): void {
 
 //changer etat produit à mettre ici
 
-// document.querySelectorAll('.statutproduit').forEach(sel => {
-//   sel.addEventListener('change', (event) => {
-//     const select = event.target as HTMLSelectElement;
-//     const status = select.value;
-//     const id = select.getAttribute("data-id");
-//       console.log(produit?.codepro, status);
-//       changerstatpro({id:id, status: status, action: "changeStatutProduit"});
+document.querySelectorAll('.statutproduit').forEach(sel => {
+  sel.addEventListener('change', (event) => {
+    const select = event.target as HTMLSelectElement;
+    const status = select.value;
+    const id = select.getAttribute("data-id");
+      console.log(produit?.codepro, status);
+      changerstatpro({id:id, status: status, action: "changeStatutProduit"});
     
-//   });
-// })
+  });
+})
 
     });
   })
@@ -389,3 +378,13 @@ function changerstatpro(objet: any){
 }
 
 
+
+function gestionAlert(statu: string, message: string){
+  Swal.fire({
+  title: statu,
+  text: message,
+  icon: statu,
+  showConfirmButton: false,
+  timer: 3000
+});
+}

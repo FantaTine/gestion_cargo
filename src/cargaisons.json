@@ -57,8 +57,8 @@
             "dateArriveePrevue": "11-Jun-1973",
             "lieuDepart": "Lynton Road",
             "lieuArrivee": "Greenland Pier",
-            "status": "Ouvert",
-            "etat": "En attente",
+            "status": "Fermer",
+            "etat": "Termin\u00e9",
             "produits": [
                 {
                     "nomproduit": "Pi\u00e9ces",
@@ -86,43 +86,8 @@
             "lieuDepart": "ermondsey Spa",
             "lieuArrivee": "Rope Street",
             "status": "Fermer",
-            "etat": "Arriver",
-            "produits": [
-                {
-                    "codepro": "P323",
-                    "nomproduit": "Iphone 16",
-                    "typeproduit": "materiels",
-                    "poids": null,
-                    "nomclient": "Diallo",
-                    "prenomclient": "Ibrahima kaba",
-                    "numclient": 785222794,
-                    "adressclient": "Ouest foire",
-                    "emailclient": "dialloibhazard@gmail.com",
-                    "nomdestinataire": "Bald\u00e9",
-                    "prenomdestinataire": "Sidy Diop",
-                    "numdestinataire": 784316538,
-                    "adressdestinataire": "Parcelle",
-                    "emaildestinataire": "sididiop53@gmail.com",
-                    "statut": "Recuperer"
-                },
-                {
-                    "codepro": "P204",
-                    "nomproduit": "Iphone 16",
-                    "typeproduit": "materiels",
-                    "poids": null,
-                    "nomclient": "Diallo",
-                    "prenomclient": "Ibrahima kaba",
-                    "numclient": 785222794,
-                    "adressclient": "Ouest foire",
-                    "emailclient": "dialloibhazard@gmail.com",
-                    "nomdestinataire": "Bald\u00e9",
-                    "prenomdestinataire": "Sidy Diop",
-                    "numdestinataire": 784316538,
-                    "adressdestinataire": "Parcelle",
-                    "emaildestinataire": "sididiop53@gmail.com",
-                    "statut": "Perdu"
-                }
-            ]
+            "etat": "En cours",
+            "produits": []
         },
         {
             "type": "Maritime",
@@ -135,7 +100,42 @@
             "lieuArrivee": "Rotherhithe",
             "status": "Ouvert",
             "etat": "En attente",
-            "produits": []
+            "produits": [
+                {
+                    "codepro": "P619",
+                    "nomproduit": "Consectetur fugiat c",
+                    "typeproduit": "chimique",
+                    "poids": null,
+                    "nomclient": "Eum assumenda et sap",
+                    "prenomclient": "Sunt magna omnis par",
+                    "numclient": 1,
+                    "adressclient": "Enim distinctio Rem",
+                    "emailclient": "tunag@mailinator.com",
+                    "nomdestinataire": "Qui irure reprehende",
+                    "prenomdestinataire": "Error adipisci tenet",
+                    "numdestinataire": 1,
+                    "adressdestinataire": "Asperiores tenetur f",
+                    "emaildestinataire": "wuril@mailinator.com",
+                    "statut": "Disponible"
+                },
+                {
+                    "codepro": "P840",
+                    "nomproduit": "At tempora nostrud e",
+                    "typeproduit": "chimique",
+                    "poids": null,
+                    "nomclient": "Voluptas aut libero ",
+                    "prenomclient": "Sunt ut anim totam m",
+                    "numclient": 1,
+                    "adressclient": "Quia atque vel non a",
+                    "emailclient": "logukyfov@mailinator.com",
+                    "nomdestinataire": "Animi maxime et fug",
+                    "prenomdestinataire": "Ipsum doloremque opt",
+                    "numdestinataire": 1,
+                    "adressdestinataire": "Dolor inventore volu",
+                    "emaildestinataire": "fihylov@mailinator.com",
+                    "statut": "Disponible"
+                }
+            ]
         },
         {
             "type": "Aerien",
@@ -148,7 +148,8 @@
             "lieuArrivee": "Royaume-Uni",
             "status": "Ouvert",
             "etat": "En attente",
-            "produits": []
+            "produits": [
+            ]
         },
         {
             "type": "Aerien",
@@ -161,25 +162,7 @@
             "lieuArrivee": "Hawkstone Road",
             "status": "Ouvert",
             "etat": "En attente",
-            "produits": [
-                {
-                    "codepro": "P100",
-                    "nomproduit": "Bonbon",
-                    "typeproduit": "alimentaires",
-                    "poids": 24,
-                    "nomclient": "Wade",
-                    "prenomclient": "Dame",
-                    "numclient": 776541290,
-                    "adressclient": "Parcelles",
-                    "emailclient": "fantatine18@gmail.com",
-                    "nomdestinataire": "Diop",
-                    "prenomdestinataire": "Sidy",
-                    "numdestinataire": 786542312,
-                    "adressdestinataire": "Mariste",
-                    "emaildestinataire": "sididiop53@gmail.com",
-                    "statut": "Disponible"
-                }
-            ]
+            "produits": []
         }
     ]
 }

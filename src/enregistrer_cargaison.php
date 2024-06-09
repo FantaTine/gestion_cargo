@@ -5,6 +5,7 @@ use Twilio\Rest\Client;
 use FPDF;
 require '/var/www/html/GestionCargo/vendor/autoload.php';
 
+
 function envoyerEmail($destinataire, $sujet, $message, $pdfAttachment = null) {
     $mail = new PHPMailer(true);
     try {
@@ -33,13 +34,13 @@ function envoyerEmail($destinataire, $sujet, $message, $pdfAttachment = null) {
 
         $mail->send();
         echo 'Message has been sent';
-        return true;
+        
     } catch (Exception $e) {
         error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
     }
 }
 
-function generatePDF($data) {
+function generatePDF($data,$cargaison) {
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
@@ -52,7 +53,14 @@ function generatePDF($data) {
         $pdf->Cell(40, 10, ucfirst($key) . ': ' . $value);
         $pdf->Ln();
     }
-
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(40, 10, 'Informations de la cargaison');
+    $pdf->Ln();
+    $pdf->SetFont('Arial', '', 12);
+    foreach ($cargaison as $key => $value) {
+        $pdf->Cell(40, 10, ucfirst($key) . ': ' . $value);
+        $pdf->Ln();
+    }
     $filePath = '/tmp/details_produit.pdf';
     $pdf->Output('F', $filePath);
 
@@ -153,6 +161,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $cargaison['produits'] = [];
                 }
                 $currentData['cargaisons'][$key]['produits'][] =$newProduit; 
+                if($cargaison['status'] == 'Fermer'){
+                    echo json_encode(["status" => "error", "message" => "cargaison close! "]);
+                    exit;
+                }
+                if($cargaison['etat'] == 'En cours' || $cargaison['etat'] == 'Terminé' || $cargaison['etat'] == 'perdue' || $cargaison['etat'] == 'archivé'){
+                    echo json_encode(["status" => "error", "message" => "Attention! "]);
+                    exit;
+                }
+                echo json_encode(["status" => "success", "message" => "produit ajouté avec succès "]);
+                $pdfFilePath = generatePDF($newProduit,$cargaison);
                 // $cargaison['produits'][] = $newProduit;
                 break;
             }
@@ -163,14 +181,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verifData = json_decode(file_get_contents($filename), true);
         error_log("Données après écriture: " . print_r($verifData, true));
 
-        echo json_encode(["status" => "success", "message" => "produit ajouté avec succès ".json_encode($currentData)]);
-
+        
         // Générer le PDF avec les informations du produit
-        $pdfFilePath = generatePDF($newProduit);
-
+        
         envoyerEmail($data['emaildestinataire'], 'Enregistrement colis', 'Votre colis ' .$data['codepro'] . ' vient d\'être mis dans la cargaison', $pdfFilePath);
         envoyerEmail($data['emailclient'], 'Enregistrement colis', 'Votre colis ' .$data['codepro'] . ' vient d\'être mis dans la cargaison', $pdfFilePath);
-
+        
+        echo json_encode(["status" => "success", "message" => "produit ajouté avec succès "]);
         exit;
     } else if(isset($data['action']) && $data['action'] === 'changeEtat') {
         
@@ -180,6 +197,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($cargaison['code'] == $data['id']) {
              
                 $currentData['cargaisons'][$key]['status'] =$data['status']; 
+
+                if($cargaison['etat'] == 'En cours' || $cargaison['etat'] == 'perdue'){
+                    echo json_encode(["status" => "error", "message" => "impossible de changer l'etat de la cargaison! "]);
+                    exit;
+                }
+              
+                
                 break;
             }
         }
@@ -200,6 +224,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($cargaison['code'] == $data['idp']) {
              
                 $currentData['cargaisons'][$key]['etat'] =$data['etat']; 
+                if($data['etat']== 'En attente' && ($cargaison['etat'] == 'perdue' || $cargaison['etat'] == 'Terminé' || $cargaison['etat'] == 'En cours')){
+                    echo json_encode(["status" => "error", "message" => "impossible de changer l'etat de la cargaison! "]);
+                    exit;
+                }
+
+               /*  if($cargaison['etat'] == 'En cours' || $cargaison['etat'] == 'perdue'){
+                    echo json_encode(["status" => "error", "message" => "impossible de changer l'etat de la cargaison! "]);
+                    exit;
+                } */
+                if($cargaison['status'] == 'Ouvert' && $data['etat'] == 'perdue'){
+                    echo json_encode(["status" => "error", "message" => "impossible de changer l'etat de la cargaison! "]);
+                    exit;
+                }
+                if($cargaison['status'] == 'Ouvert' && $data['etat'] == 'En cours'){
+                    echo json_encode(["status" => "error", "message" => "Fermer d'abord la cargaison! "]);
+                    exit;
+                }
                 break;
             }
         }
@@ -209,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $verifData = json_decode(file_get_contents($filename), true);
         error_log("Données après écriture: " . print_r($verifData, true));
 
-        echo json_encode(["etat" => "success", "message" => "etat changer avec succès "]);
+        echo json_encode(["status" => "success", "message" => "etat changer avec succès "]);
         exit;
     }
     else if(isset($data['action']) && $data['action'] === 'changeStatutProduit') {
@@ -220,7 +261,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($cargaison['produits'] as $key1 => $produit) {
             if ($produit['codepro'] == $data['id']) {
              
-                $currentData['cargaisons'][$key]['produits'][$key1]['statut'] =$data['status']; 
+                
+                if($cargaison['etat'] === 'En cours' || $cargaison['etat'] === 'Terminé' || $cargaison['status'] === 'Fermer'){
+                    echo json_encode(["status" => "error", "message" => "impossible de changer l'etat du produit! "]);
+                    exit;
+                }
+                $currentData['cargaisons'][$key]['produits'][$key1]['statut'] =$data['status'];
+                
                 break;
             }
         }
@@ -248,4 +295,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     exit;
 }
+
+//Fonction pour la connexion et la validation des champs
+function validate_login($username, $password, $users) {
+    foreach ($users as $user) {
+        if ($user['username'] === $username && $user['password'] === $password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Lire le fichier JSON et le convertir en tableau PHP
+    $json_data = file_get_contents('/var/www/html/GestionCargo/src/identifiant.json');
+    $users = json_decode($json_data, true);
+
+    // Vérifier si les utilisateurs ont été correctement chargés du fichier JSON
+    if ($users === null) {
+        $error = urlencode("Erreur de chargement des données utilisateurs.");
+        header("Location: login.html.php?error=$error");
+        exit();
+    }
+
+    // Valider les identifiants de connexion
+    if (validate_login($username, $password, $users)) {
+        // Redirection vers la page d'accueil ou tableau de bord
+        header("Location: index.html.php");
+        exit();
+    } else {
+        // Redirection avec un message d'erreur
+        $error = urlencode("Nom d'utilisateur ou mot de passe incorrect.");
+        header("Location: login.html.php?error=$error");
+        exit();
+    }
+}
+
+
 ?>

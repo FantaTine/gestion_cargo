@@ -18,7 +18,6 @@ let cargo = [];
     const dateDepart = document.getElementById('datedepart').value;
     const dateArrive = document.getElementById('datearrivee').value;
     const cargaison = new Cargaison("ajoutcargaison", numero, typeCargaison, poidsCargaison, distance, dateDepart, dateArrive, pointDepart, pointArrive, "En attente", "Ouvert", []);
-    console.log(cargaison);
     fetch("enregistrer_cargaison.php", {
         method: 'POST',
         headers: {
@@ -99,14 +98,12 @@ function afficherCargaisons() {
             <td class="px-6 py-4 " ><button  class="bg-yellow-500 text-white h-10 px-5 py-1 rounded btn-ajt" data-id="${cargaison.code}"  type="button" >Ajouter</button></td>
           `;
             cargaisonList.appendChild(row);
-            console.log(cargaison.code);
         });
         createPagination(cargaisons.length, itemsPerPage);
         document.addEventListener('click', (event) => {
             const target = event.target;
             if (target.classList.contains('btn-ajt')) {
                 id = target.getAttribute('data-id');
-                console.log(id);
                 const my_modal_3 = document.getElementById('my_modal_3');
                 if (id) {
                     my_modal_3.showModal();
@@ -117,7 +114,6 @@ function afficherCargaisons() {
             const target = event.target;
             if (target.classList.contains('btn-view')) {
                 id = target.getAttribute('data-id');
-                console.log(id);
                 const my_modal_2 = document.getElementById('my_modal_2');
                 if (id) {
                     my_modal_2.showModal();
@@ -125,11 +121,9 @@ function afficherCargaisons() {
                 }
             }
             const ids = document.querySelectorAll('.statutproduit');
-            console.log(ids);
             ids.forEach(id => {
                 id.addEventListener('change', function (event) {
                     const target = event.target;
-                    console.log(target === null || target === void 0 ? void 0 : target.value);
                     const idproduit = id.getAttribute('id');
                     changerstatpro({ id: idproduit, status: target.value, action: 'changeStatutProduit' });
                 });
@@ -158,7 +152,6 @@ afficherCargaisons();
     const produit = new Produit("ajoutproduit", codepro, nomproduit, typeproduit, poids, nomclient, prenomclient, numclient, adressclient, emailclient, nomdestinataire, prenomdestinataire, numdestinataire, adressdestinataire, id, emaildestinataire, "Disponible");
     envoyerversjson(produit);
 });
-console.log("simple");
 function envoyerversjson(objet) {
     fetch("enregistrer_cargaison.php", {
         method: "POST",
@@ -169,24 +162,14 @@ function envoyerversjson(objet) {
     })
         .then(response => response.json())
         .then(result => {
+        console.log(result);
         if (result.status === 'success') {
             const my_modal_3 = document.getElementById('my_modal_3');
             my_modal_3.close();
-            //   Swal.fire({
-            //     title: "Succès",
-            //     text: "Produit enregisré avec succès",
-            //     icon: "success",
-            //     showConfirmButton: false,
-            //     timer: 3000
-            //   });
-            // }else{
-            //   Swal.fire({
-            //     title: "Erreur",
-            //     text: "Produit non enregisré",
-            //     icon: "error",
-            //     showConfirmButton: false,
-            //     timer: 3000
-            //   });
+            gestionAlert(result.status, result.message);
+        }
+        else {
+            gestionAlert(result.status, result.message);
         }
     });
 }
@@ -198,7 +181,6 @@ function afficherDetailsCargaisons(id) {
         const cargaisons = data.cargaisons;
         const cargaison = cargaisons.find(cargaison => cargaison.code === id);
         cargo = [...cargaisons];
-        console.log(cargaisons);
         const cargaisonList = document.getElementById('bodydetailscargo');
         if (!cargaisonList)
             return;
@@ -243,7 +225,6 @@ function afficherDetailsCargaisons(id) {
                 const select = event.target;
                 const etat = select.value;
                 const id = select.getAttribute("data-id");
-                console.log(cargaison === null || cargaison === void 0 ? void 0 : cargaison.code, etat);
                 changerstatus({ idp: id, etat: etat, action: "changeStatus" });
                 // envoyerversjson(cargaison);
             });
@@ -278,15 +259,15 @@ function afficherDetailsCargaisons(id) {
         `;
             produitList.appendChild(row1);
             //changer etat produit à mettre ici
-            // document.querySelectorAll('.statutproduit').forEach(sel => {
-            //   sel.addEventListener('change', (event) => {
-            //     const select = event.target as HTMLSelectElement;
-            //     const status = select.value;
-            //     const id = select.getAttribute("data-id");
-            //       console.log(produit?.codepro, status);
-            //       changerstatpro({id:id, status: status, action: "changeStatutProduit"});
-            //   });
-            // })
+            document.querySelectorAll('.statutproduit').forEach(sel => {
+                sel.addEventListener('change', (event) => {
+                    const select = event.target;
+                    const status = select.value;
+                    const id = select.getAttribute("data-id");
+                    console.log(produit === null || produit === void 0 ? void 0 : produit.codepro, status);
+                    changerstatpro({ id: id, status: status, action: "changeStatutProduit" });
+                });
+            });
         });
     });
 }
@@ -301,4 +282,13 @@ function changerstatus(objet) {
 function changerstatpro(objet) {
     envoyerversjson(objet);
     // afficherCargaisons();
+}
+function gestionAlert(statu, message) {
+    Swal.fire({
+        title: statu,
+        text: message,
+        icon: statu,
+        showConfirmButton: false,
+        timer: 3000
+    });
 }
